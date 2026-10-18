@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chariots of Grace — A Journey Through the Ten Commandments</title>
 <meta name="theme-color" content="#141a33">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<meta name="description" content="A free Bible-stories game about the Ten Commandments, forgiveness and grace.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chariots of Grace">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,8 +21,9 @@
   <nav>
     <button class="nav-tab active" data-tab="play">Journey</button>
     <button class="nav-tab" data-tab="law">Commandments</button>
-    <button class="nav-tab" data-tab="donate">Donate</button>
+    <button class="nav-tab donate-only" data-tab="donate">Donate</button>
     <button class="nav-tab" data-tab="about">About</button>
+    <button id="btn-install" class="install-btn" hidden>📲 Install app</button>
   </nav>
 </header>
 
@@ -35,21 +43,34 @@
     </div>
   </section>
 
-  <section id="tab-donate" class="tab-panel">
+  <section id="tab-donate" class="tab-panel donate-only">
     <div class="panel-block donate-block">
       <h2>Support Chariots of Grace 🕊️</h2>
-      <p>This game is <b>free</b> for every family, Sunday school, and classroom — no ads, no accounts, no in-game purchases. Everything in the game is earned by your choices, never bought. It runs entirely in your browser, but writing new stories, hosting the site, and maintaining it all take real time.</p>
+      <p>This game is <b>free</b> for every family, Sunday school, and classroom — no ads, no accounts, and nothing to buy in the game. Everything in the game is earned by your choices, never bought. Writing new stories, hosting, and maintaining it all take real time.</p>
       <p>If the game helped someone you love think about kindness, honesty, and forgiveness, you can be a cheerful giver too:</p>
-      <div class="donate-tiers">
-        <div class="tier-card"><div class="tier-amount">$3</div><div class="tier-name">Two small coins</div></div>
-        <div class="tier-card"><div class="tier-amount">$10</div><div class="tier-name">Loaves &amp; fishes</div></div>
-        <div class="tier-card"><div class="tier-amount">$25</div><div class="tier-name">A double portion</div></div>
+      <div class="web-only">
+        <div class="donate-tiers">
+          <div class="tier-card"><div class="tier-amount">$3</div><div class="tier-name">Two small coins</div></div>
+          <div class="tier-card"><div class="tier-amount">$10</div><div class="tier-name">Loaves &amp; fishes</div></div>
+          <div class="tier-card"><div class="tier-amount">$25</div><div class="tier-name">A double portion</div></div>
+        </div>
+        <div class="btn-row">
+          <a class="primary btn-link" href="https://ko-fi.com/gigglebyte1010" target="_blank" rel="noopener">💛 One-time donation</a>
+          <a class="btn-link" href="https://ko-fi.com/gigglebyte1010/tiers" target="_blank" rel="noopener">🔁 Become a monthly supporter</a>
+        </div>
+        <p class="hint">Donations are processed securely by Ko-fi — you'll leave this page briefly to complete payment.</p>
       </div>
-      <div class="btn-row">
-        <a class="primary btn-link" href="https://ko-fi.com/gigglebyte1010" target="_blank" rel="noopener">💛 One-time donation</a>
-        <a class="btn-link" href="https://ko-fi.com/gigglebyte1010/tiers" target="_blank" rel="noopener">🔁 Become a monthly supporter</a>
+      <div class="play-only">
+        <div class="donate-tiers">
+          <button class="tier-card play-tier" data-sku="donate_small"><span class="tier-amount price">$2.99</span><span class="tier-name">Two small coins</span></button>
+          <button class="tier-card play-tier" data-sku="donate_medium"><span class="tier-amount price">$9.99</span><span class="tier-name">Loaves &amp; fishes</span></button>
+          <button class="tier-card play-tier" data-sku="donate_large"><span class="tier-amount price">$24.99</span><span class="tier-name">A double portion</span></button>
+        </div>
+        <div id="play-gate" class="play-gate" hidden></div>
+        <p id="play-donate-status" class="hint" aria-live="polite"></p>
+        <p class="hint">Donations are one-time and processed securely by <span id="store-name">Google Play</span>. They are optional and unlock nothing.</p>
       </div>
-      <p class="hint">Donations are processed securely by Ko-fi — you'll leave this page briefly to complete payment. Donating never changes your score: grace in this game, like in the Bible, can't be bought.</p>
+      <p class="hint">Donating never changes your score: grace in this game, like in the Bible, can't be bought.</p>
     </div>
   </section>
 
@@ -66,10 +87,19 @@
         <li><b>🔥 Upgrade your chariot</b> with talents, from a shepherd's cart all the way to a chariot of fire.</li>
         <li><b>🪑 Reach the throne room</b> at the end, lay down your burdens, and cast your crowns before the throne.</li>
       </ol>
+      <div class="web-install">
+      <h2>Install as an app</h2>
+      <ul>
+        <li><b>Android / Chrome / Edge:</b> tap <b>📲 Install app</b> at the top, or open the browser menu and choose <b>Install app</b> / <b>Add to Home screen</b>.</li>
+        <li><b>iPhone / iPad:</b> open this page in Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</li>
+      </ul>
+      <p class="hint">Once installed, the game opens full-screen from its own icon and keeps working offline.</p>
+      </div>
       <h2>A note on grace</h2>
       <p class="hint">The dice add surprise — but in the game, as in the Bible, <b>forgiveness is never left to chance.</b> Whenever you repent, you're forgiven, every time (1 John 1:9). The "Moments of Grace" are unexpected blessings along the road, reflecting the idea that "time and chance happeneth to them all" (Ecclesiastes 9:11) while God remains in control (Proverbs 16:33).</p>
       <h2>Sources</h2>
       <p class="hint">Story summaries are written in our own words for young readers. Short quotations are from the King James Version (public domain). We encourage players to read each full passage — references are shown on every story card.</p>
+      <p class="hint"><a href="privacy.html">Privacy policy</a> — this game collects no personal information.</p>
       <h2>Accessibility</h2>
       <ul>
         <li>Every interactive element is a real button, usable with Tab + Enter/Space.</li>
@@ -83,5 +113,6 @@
 <script src="js/stories.js"></script>
 <script src="js/art.js"></script>
 <script src="js/game.js"></script>
+<script src="js/play-billing.js"></script>
 </body>
 </html>

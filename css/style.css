@@ -188,3 +188,18 @@ cite { font-style: normal; font-size: .85em; opacity: .8; display: inline-block;
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 .outcome .btn-row, .repent .btn-row { justify-content: center; }
+.install-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: .4rem .8rem; border-radius: 999px; }
+.install-btn[hidden] { display: none; }
+/* Inside the Google Play app, Ko-fi links are hidden (Play payments policy); donations go through Google Play Billing instead. */
+.play-app:not(.billing) .donate-only, .play-app .web-only { display: none !important; }
+.play-only { display: none; }
+.play-app.billing .play-only { display: block; }
+button.tier-card { font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: .2rem; }
+button.tier-card:hover { border-color: var(--gold); }
+.play-gate { background: var(--bg2); border: 1px solid var(--gold); border-radius: 12px; padding: .8rem 1rem; margin: .5rem 0; }
+.play-gate[hidden] { display: none; }
+.gate-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+.gate-row input { font: inherit; width: 6rem; padding: .5rem; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+/* Inside the Apple app, Ko-fi and "install" instructions are hidden; donations go through Apple in-app purchase. */
+.ios-app:not(.billing) .donate-only, .ios-app .web-only, .ios-app .web-install, .play-app .web-install { display: none !important; }
+.ios-app.billing .play-only { display: block; }

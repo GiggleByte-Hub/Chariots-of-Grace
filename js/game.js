@@ -291,7 +291,7 @@
         ${kind === "righteous" ? `<div class="crown-pop">${ART.crown("pop")}</div>` : ""}
         <p>${msg}</p>
         <div class="chips">${chips}</div>${back}
-        <p class="hint">Want to give for real? The <a href="#" id="to-donate">Donate</a> tab supports keeping this game free for every family.</p>
+        <p class="hint donate-only">Want to give for real? The <a href="#" id="to-donate">Donate</a> tab supports keeping this game free for every family.</p>
         <div class="btn-row"><button id="btn-next" class="primary">Cast the lot 🎲</button></div>
       </div>`);
       on("to-donate", e => { e.preventDefault(); showTab("donate"); });
@@ -439,11 +439,12 @@
       <p class="hint">See how you did on each commandment in the <a href="#" id="to-law">Commandments</a> tab.</p>
       <div class="btn-row center">
         <button id="btn-again" class="primary">Ride again</button>
-        <a class="btn-link" href="https://ko-fi.com/gigglebyte1010" target="_blank" rel="noopener">💛 Pay it forward — donate</a>
+        <button id="btn-give" class="donate-only">💛 Pay it forward — donate</button>
       </div>
     </div>`);
     on("to-law", e => { e.preventDefault(); showTab("law"); });
     on("btn-again", () => { S = freshState(); save(); renderHUD(); map(); });
+    on("btn-give", () => showTab("donate"));
   }
 
   // ---------- tabs ----------
@@ -453,6 +454,34 @@
     window.scrollTo(0, 0);
   }
   document.querySelectorAll(".nav-tab").forEach(t => t.addEventListener("click", () => showTab(t.dataset.tab)));
+
+  // ---------- Google Play app ----------
+  // The Play Store app opens the site from "android-app://" (or with ?app=play).
+  // Remember that for the session so donation links stay hidden as the player moves around.
+  let playApp = document.referrer.startsWith("android-app://") || /[?&]app=play\b/.test(location.search);
+  try { if (playApp) sessionStorage.setItem("play-app", "1"); else playApp = sessionStorage.getItem("play-app") === "1"; } catch (e) {}
+  if (playApp) document.body.classList.add("play-app");
+
+  // ---------- Apple App Store app ----------
+  // The iPad/iPhone app (Swift Playgrounds wrapper) sets window.IOS_APP before the page loads.
+  // Apple only allows donation requests from registered charities, so Donate is hidden there.
+  const iosApp = window.IOS_APP === true;
+  if (iosApp) document.body.classList.add("ios-app");
+
+  // ---------- installable app ----------
+  if ("serviceWorker" in navigator && !iosApp) {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("service-worker.js").catch(() => {}); });
+  }
+  let installPrompt = null;
+  const installBtn = document.getElementById("btn-install");
+  window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installPrompt = e; installBtn.hidden = false; });
+  installBtn.addEventListener("click", async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null; installBtn.hidden = true;
+  });
+  window.addEventListener("appinstalled", () => { installBtn.hidden = true; });
 
   renderLaw();
   intro();
